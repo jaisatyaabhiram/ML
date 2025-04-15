@@ -1,0 +1,31 @@
+DESCRIPTION:
+Support Vector Machine (SVM) is a classification algorithm that separates
+data into different classes by finding a hyperplane with the maximum margin.
+It works well for both linear and non-linear problems and is known for its
+accuracy and ability to handle complex datasets. SVM is commonly used in
+tasks like text classification and image recognition.
+PROGRAM:
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+# Load the Iris dataset
+iris = datasets.load_iris()
+X, y = iris.data, iris.target
+# Split into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2,
+random_state=42)
+# Standardize features
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+# Create and train the SVM model
+svm_model = SVC(kernel='linear', C=1.0) # You can use 'rbf', 'poly', or
+'sigmoid' kernel
+svm_model.fit(X_train, y_train)
+# Predict on the test set
+y_pred = svm_model.predict(X_test)
+# Evaluate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Accuracy: {accuracy:.2f}')
